@@ -9,22 +9,26 @@ namespace project_oop
         // fields
         private string _maNV;
         private int _luongCoBan;
+        private string _pass;
 
         // properties
         public string MaNV { get => _maNV; set => _maNV = value; }
         public int LuongCoBan { get => _luongCoBan; set => _luongCoBan = value; }
+        public string Pass { get => _pass; set => _pass = value; }
 
         // constructors
         public NhanVien(): base()
         {
             _maNV = "";
             _luongCoBan = 0;
+            _pass = "";
         }
 
-        public NhanVien(string maNV, int luongCoBan, string hoTen, int cmnd, string quocTich, DateTime ngaySinh, string gioiTinh, int sdt):base(hoTen, cmnd, quocTich, ngaySinh, gioiTinh, sdt)
+        public NhanVien(string maNV, int luongCoBan, string pass, string hoTen, int cmnd, string quocTich, DateTime ngaySinh, string gioiTinh, int sdt):base(hoTen, cmnd, quocTich, ngaySinh, gioiTinh, sdt)
         {
             _maNV = maNV;
             _luongCoBan = luongCoBan;
+            _pass = pass;
         }
 
         // methods
