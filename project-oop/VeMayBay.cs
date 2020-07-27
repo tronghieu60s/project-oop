@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace project_oop
 {
@@ -57,6 +58,24 @@ namespace project_oop
                 $"Nhan vien: {_nhanVien.toString()}\n" +
                 $"Khach hang: {_khachHang.toString()}\n" +
                 $"Chuyen Bay: {_chuyenBay.toString()}";
+        }
+
+        public void Read(StreamReader sR)
+        {
+            string line = sR.ReadLine();
+            string[] arr = line.Split('#');
+            MaVe = arr[0];
+            SoLuongVe = int.Parse(arr[1]);
+            GiaVe = int.Parse(arr[2]);
+            ThanhToan = arr[3];
+            NhanVien.MaNV = arr[4];
+            KhachHang.MaKH = arr[5];
+            ChuyenBay.MaCB = arr[6];
+        }
+
+        public void Write(StreamWriter sW)
+        {
+            sW.WriteLine($"{MaVe}#{SoLuongVe}#{GiaVe}#{ThanhToan}#{NhanVien.MaNV}#{KhachHang.MaKH}#{ChuyenBay.MaCB}");
         }
     }
 }

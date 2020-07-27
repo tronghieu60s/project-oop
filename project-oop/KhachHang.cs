@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace project_oop
 {
@@ -37,6 +38,26 @@ namespace project_oop
                 $"Dia chi: {_diaChi}\n" +
                 $"Passport: {_passport}\n" +
                 $"{base.toString()}";
+        }
+
+        public void Read(StreamReader sR)
+        {
+            string line = sR.ReadLine();
+            string[] arr = line.Split('#');
+            MaKH = arr[0];
+            DiaChi = arr[1];
+            Passport = arr[2];
+            HoTen = arr[3];
+            Cmnd = int.Parse(arr[4]);
+            QuocTich = arr[5];
+            NgaySinh = DateTime.Parse(arr[6]);
+            GioiTinh = arr[7];
+            Sdt = int.Parse(arr[8]);
+        }
+
+        public void Write(StreamWriter sW)
+        {
+            sW.WriteLine($"{MaKH}#{DiaChi}#{Passport}#{HoTen}#{Cmnd}#{QuocTich}#{NgaySinh}#{GioiTinh}#{Sdt}");
         }
     }
 }

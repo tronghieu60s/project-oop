@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace project_oop
 {
@@ -47,6 +48,22 @@ namespace project_oop
                 $"Diem di: {_diemDi.toString()}\n" +
                 $"Diem den: {_diemDen.toString()}\n" +
                 $"May bay: {_mayBay.toString()}";
+        }
+
+        public void Read(StreamReader sR)
+        {
+            string line = sR.ReadLine();
+            string[] arr = line.Split('#');
+            MaCB = arr[0];
+            NgayGioBay = DateTime.Parse(arr[1]);
+            DiemDi.MaSB = arr[2];
+            DiemDen.MaSB = arr[3];
+            MayBay.MaMB = arr[4];
+        }
+
+        public void Write(StreamWriter sW)
+        {
+            sW.WriteLine($"{MaCB}#{NgayGioBay}#{DiemDi.MaSB}#{DiemDen.MaSB}#{MayBay.MaMB}");
         }
     }
 }

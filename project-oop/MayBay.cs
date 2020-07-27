@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace project_oop
 {
@@ -42,6 +43,21 @@ namespace project_oop
                 $"Ten may bay: {_tenMayBay}\n" +
                 $"Ten hang: {_tenHangMB}\n" +
                 $"So luong ghe: {_soLuongGhe}";
+        }
+
+        public void Read(StreamReader sR)
+        {
+            string line = sR.ReadLine();
+            string[] arr = line.Split('#');
+            MaMB = arr[0];
+            TenMayBay = arr[1];
+            TenHangMB = arr[2];
+            SoLuongGhe = int.Parse(arr[3]);
+        }
+
+        public void Write(StreamWriter sW)
+        {
+            sW.WriteLine($"{MaMB}#{TenMayBay}#{TenHangMB}#{SoLuongGhe}");
         }
     }
 }
