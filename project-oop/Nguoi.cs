@@ -51,12 +51,7 @@ namespace project_oop
         // methods
         public virtual string toString()
         {
-            return $"Ho ten: {_hoTen}\n" +
-                $"CMND: {_cmnd}\n" +
-                $"Quoc tich: {_quocTich}\n" +
-                $"Ngay sinh: {_ngaySinh}\n" +
-                $"Gioi tinh: {_gioiTinh}\n" +
-                $"SDT: {_sdt}";
+            return $"{HoTen,-15}{Cmnd,-10}{QuocTich,-10}{$"{NgaySinh.Day}/{NgaySinh.Month}/{NgaySinh.Year}",-15}{GioiTinh,-10}{Sdt,-10}";
         }
     }
 }

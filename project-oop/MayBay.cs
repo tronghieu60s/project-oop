@@ -106,7 +106,7 @@ namespace project_oop
                 Console.WriteLine(p.Value.toString());
         }
 
-        public MayBay Get(string maMB)
+        public static MayBay Get(string maMB)
         {
             LinkedList<MayBay> ListMayBay = InputList();
             for (LinkedListNode<MayBay> p = ListMayBay.First; p != null; p = p.Next)

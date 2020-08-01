@@ -65,7 +65,6 @@ namespace project_oop
             sW.WriteLine($"{MaNV}#{LuongCoBan}#{Pass}#{HoTen}#{Cmnd}#{QuocTich}#{NgaySinh}#{GioiTinh}#{Sdt}");
         }
 
-
         public static LinkedList<NhanVien> InputList()
         {
             LinkedList<NhanVien> List = new LinkedList<NhanVien>();
@@ -89,6 +88,15 @@ namespace project_oop
                     throw;
             }
             return List;
+        }
+
+        public static NhanVien Get(string maNV)
+        {
+            LinkedList<NhanVien> ListNhanVien = InputList();
+            for (LinkedListNode<NhanVien> p = ListNhanVien.First; p != null; p = p.Next)
+                if (p.Value.MaNV == maNV)
+                    return p.Value;
+            return null;
         }
     }
 }

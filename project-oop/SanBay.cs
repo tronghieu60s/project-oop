@@ -101,7 +101,7 @@ namespace project_oop
                 Console.WriteLine(p.Value.toString());
         }
 
-        public SanBay Get(string maSB)
+        public static SanBay Get(string maSB)
         {
             LinkedList<SanBay> ListSanBay = InputList();
             for (LinkedListNode<SanBay> p = ListSanBay.First; p != null; p = p.Next)

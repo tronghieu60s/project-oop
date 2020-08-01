@@ -39,10 +39,7 @@ namespace project_oop
         // methods
         public override string toString()
         {
-            return $"Ma khach hang: {_maKH}\n" +
-                $"Dia chi: {_diaChi}\n" +
-                $"Passport: {_passport}\n" +
-                $"{base.toString()}";
+            return $"\t{MaKH,-10}{base.toString()}{DiaChi,-10}{Passport,-10}";
         }
 
         public void Read(StreamReader sR)
@@ -63,6 +60,59 @@ namespace project_oop
         public void Write(StreamWriter sW)
         {
             sW.WriteLine($"{MaKH}#{DiaChi}#{Passport}#{HoTen}#{Cmnd}#{QuocTich}#{NgaySinh}#{GioiTinh}#{Sdt}");
+        }
+
+        public static LinkedList<KhachHang> InputList()
+        {
+            LinkedList<KhachHang> List = new LinkedList<KhachHang>();
+            int iN = 0;
+            try
+            {
+                using (StreamReader sR = new StreamReader("KhachHang.txt"))
+                {
+                    int.TryParse(sR.ReadLine(), out iN);
+                    for (int i = 0; i < iN; i++)
+                    {
+                        KhachHang p = new KhachHang();
+                        p.Read(sR);
+                        List.AddLast(p);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                using (StreamWriter sW = new StreamWriter("KhachHang.txt"))
+                    throw;
+            }
+            return List;
+        }
+
+        public static void WriteList(LinkedList<KhachHang> List)
+        {
+            using (StreamWriter sW = new StreamWriter("KhachHang.txt"))
+            {
+                sW.WriteLine(List.Count);
+                for (LinkedListNode<KhachHang> p = List.First; p != null; p = p.Next)
+                    p.Value.Write(sW);
+            }
+        }
+
+        public static void PrintList(LinkedList<KhachHang> List)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\t{"Ma KH",-10}{"Ho Ten",-15}{"CMND",-10}{"Quoc Tich",-10}{"Ngay Sinh",-15}{"Gioi Tinh",-10}{"SDT",-10}{"Dia Chi",-10}{"Passport",-10}");
+            Console.ResetColor();
+            for (LinkedListNode<KhachHang> p = List.First; p != null; p = p.Next)
+                Console.WriteLine(p.Value.toString());
+        }
+
+        public static KhachHang Get(string maKH)
+        {
+            LinkedList<KhachHang> ListKhachHang = InputList();
+            for (LinkedListNode<KhachHang> p = ListKhachHang.First; p != null; p = p.Next)
+                if (p.Value.MaKH == maKH)
+                    return p.Value;
+            return null;
         }
     }
 }

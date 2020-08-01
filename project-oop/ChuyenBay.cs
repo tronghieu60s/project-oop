@@ -48,7 +48,7 @@ namespace project_oop
         // methods
         public string toString()
         {
-            return $"\t{_maCB,-25}{_ngayGioBay,-25}{_diemDi.TenSB,-25}{_diemDen.TenSB,-25}{_mayBay.TenMayBay,-25}";
+            return $"\t{_maCB,-20}{_ngayGioBay,-25}{_diemDi.TenSB,-20}{_diemDen.TenSB,-20}{_mayBay.TenMayBay,-20}";
         }
 
         public void Read(StreamReader sR)
@@ -59,13 +59,13 @@ namespace project_oop
             _ngayGioBay = DateTime.Parse(arr[1]);
 
             _diemDi.MaSB = arr[2];
-            _diemDi = _diemDi.Get(_diemDi.MaSB);
+            _diemDi = SanBay.Get(_diemDi.MaSB);
 
             _diemDen.MaSB = arr[3];
-            _diemDen = _diemDen.Get(_diemDen.MaSB);
+            _diemDen = SanBay.Get(_diemDen.MaSB);
             
             _mayBay.MaMB = arr[4];
-            _mayBay = _mayBay.Get(_mayBay.MaMB);
+            _mayBay = MayBay.Get(_mayBay.MaMB);
         }
 
         public void Write(StreamWriter sW)
@@ -111,10 +111,19 @@ namespace project_oop
         public static void PrintList(LinkedList<ChuyenBay> List)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\t{0,-25}{1,-25}{2,-25}{3,-25}{4,-25}", "Ma Chuyen Bay", "Ngay Gio Bay", "Diem Di", "Diem Den", "May Bay");
+            Console.WriteLine("\t{0,-20}{1,-25}{2,-20}{3,-20}{4,-20}", "Ma Chuyen Bay", "Ngay Gio Bay", "Diem Di", "Diem Den", "May Bay");
             Console.ResetColor();
             for (LinkedListNode<ChuyenBay> p = List.First; p != null; p = p.Next)
                 Console.WriteLine(p.Value.toString());
+        }
+
+        public static ChuyenBay Get(string maCB)
+        {
+            LinkedList<ChuyenBay> ListChuyenBay = InputList();
+            for (LinkedListNode<ChuyenBay> p = ListChuyenBay.First; p != null; p = p.Next)
+                if (p.Value.MaCB == maCB)
+                    return p.Value;
+            return null;
         }
     }
 }

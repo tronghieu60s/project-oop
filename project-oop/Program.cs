@@ -9,7 +9,8 @@ namespace project_oop
         static void Main(string[] args)
         {
             LinkedList<NhanVien> ListNhanVien = NhanVien.InputList();
-            if (DangNhapNhanVien(ListNhanVien) != null)
+            NhanVien nvDangNhap = DangNhapNhanVien(ListNhanVien);
+            if (nvDangNhap != null)
             {
             Menu:
                 switch (Menu.MenuNhanVien())
@@ -33,6 +34,20 @@ namespace project_oop
                         ChuyenBay.PrintList(ListChuyenBay);
                         if (Support.CheckForInput())
                             ThemChuyenBay(ListChuyenBay);
+                        Support.PressKeyToExit();
+                        goto Menu;
+                    case 4:
+                        LinkedList<KhachHang> ListKhachHang = KhachHang.InputList();
+                        KhachHang.PrintList(ListKhachHang);
+                        if (Support.CheckForInput())
+                            ThemKhachHang(ListKhachHang);
+                        Support.PressKeyToExit();
+                        goto Menu;
+                    case 5:
+                        LinkedList<VeMayBay> ListVeMB = VeMayBay.InputList();
+                        VeMayBay.PrintList(ListVeMB);
+                        if (Support.CheckForInput())
+                            ThemVeMayBay(ListVeMB, nvDangNhap);
                         Support.PressKeyToExit();
                         goto Menu;
                     default:
@@ -134,43 +149,78 @@ namespace project_oop
         }
 
         // Action KhachHang
-        static void ThemKhachHang(LinkedList<ChuyenBay> List)
+        static void ThemKhachHang(LinkedList<KhachHang> List)
         {
-            ChuyenBay chuyenBay = new ChuyenBay();
-            LinkedList<SanBay> ListSanBay = SanBay.InputList();
-            LinkedList<MayBay> ListMayBay = MayBay.InputList();
+            KhachHang khachHang = new KhachHang();
 
-            Console.WriteLine("\nThem chuyen bay: ");
-            chuyenBay.MaCB = Support.RandomID("CB");
-            Console.Write("\t- Ngay gio bay: ");
-            DateTime ngayGioBay; DateTime.TryParse(Console.ReadLine(), out ngayGioBay);
-            chuyenBay.NgayGioBay = ngayGioBay;
+            Console.WriteLine("\nThem khach hang: ");
+            khachHang.MaKH = Support.RandomID("KH");
+            Console.Write("\t- Nhap ho ten: ");
+            khachHang.HoTen = Console.ReadLine();
+            Console.Write("\t- Nhap cmnd: ");
+            int cmnd; int.TryParse(Console.ReadLine(), out cmnd);
+            khachHang.Cmnd = cmnd;
+            Console.Write("\t- Nhap quoc tich: ");
+            khachHang.QuocTich = Console.ReadLine();
+            Console.Write("\t- Nhap ngay sinh: ");
+            DateTime ngaySinh; DateTime.TryParse(Console.ReadLine(), out ngaySinh);
+            khachHang.NgaySinh = ngaySinh;
+            Console.Write("\t- Nhap gioi tinh: ");
+            khachHang.GioiTinh = Console.ReadLine();
+            Console.Write("\t- Nhap sdt: ");
+            int sdt; int.TryParse(Console.ReadLine(), out sdt);
+            khachHang.Sdt = sdt;
 
-            SanBay.PrintList(ListSanBay);
-            Console.Write("\t- Nhap ma diem di: ");
-            string maDiemDi = Console.ReadLine();
-            Console.Write("\t- Nhap ma diem den: ");
-            string maDiemDen = Console.ReadLine();
-            for (LinkedListNode<SanBay> p = ListSanBay.First; p != null; p = p.Next)
+            Console.Write("\t- Nhap dia chi: ");
+            khachHang.DiaChi = Console.ReadLine();
+            Console.Write("\t- Nhap passport: ");
+            khachHang.Passport = Console.ReadLine();
+
+            List.AddLast(khachHang);
+            KhachHang.WriteList(List);
+            Support.Await(true, "Them hanh khach thanh cong!", "");
+        }
+
+        // Action VeMayBay
+        static void ThemVeMayBay(LinkedList<VeMayBay> List, NhanVien nhanVien)
+        {
+            VeMayBay veMayBay = new VeMayBay();
+            LinkedList<KhachHang> ListKhachHang = KhachHang.InputList();
+            LinkedList<ChuyenBay> ListChuyenBay = ChuyenBay.InputList();
+
+            Console.WriteLine("\nThem ve may bay: ");
+            veMayBay.MaVe = Support.RandomID("VMB");
+            Console.Write("\t- Nhap so luong: ");
+            int soLuongVe; int.TryParse(Console.ReadLine(), out soLuongVe);
+            veMayBay.SoLuongVe = soLuongVe;
+            Console.Write("\t- Nhap gia ve: ");
+            int giaVe; int.TryParse(Console.ReadLine(), out giaVe);
+            veMayBay.GiaVe = giaVe;
+            Console.Write("\t- Nhap loai thanh toan: ");
+            veMayBay.ThanhToan = Console.ReadLine();
+            veMayBay.NhanVien = nhanVien;
+
+            KhachHang.PrintList(ListKhachHang);
+            Console.Write("\t- Nhap ma khach hang: ");
+            string maKH = Console.ReadLine();
+            for (LinkedListNode<KhachHang> p = ListKhachHang.First; p != null; p = p.Next)
             {
-                if (p.Value.MaSB == maDiemDi)
-                    chuyenBay.DiemDi = p.Value;
-                if (p.Value.MaSB == maDiemDen)
-                    chuyenBay.DiemDen = p.Value;
+                if (p.Value.MaKH == maKH)
+                    veMayBay.KhachHang = p.Value;
             }
 
-            MayBay.PrintList(ListMayBay);
-            Console.Write("\t- Nhap ma may bay: ");
-            string maMayBay = Console.ReadLine();
-            for (LinkedListNode<MayBay> p = ListMayBay.First; p != null; p = p.Next)
+            ChuyenBay.PrintList(ListChuyenBay);
+            Console.Write("\t- Nhap ma chuyen bay: ");
+            string maCB = Console.ReadLine();
+            for (LinkedListNode<ChuyenBay> p = ListChuyenBay.First; p != null; p = p.Next)
             {
-                if (p.Value.MaMB == maMayBay)
-                    chuyenBay.MayBay = p.Value;
+                if (p.Value.MaCB == maCB)
+                    veMayBay.ChuyenBay = p.Value;
             }
 
-            List.AddLast(chuyenBay);
-            ChuyenBay.WriteList(List);
-            Support.Await(true, "Them chuyen bay thanh cong!", "");
+            List.AddLast(veMayBay);
+            VeMayBay.WriteList(List);
+            Support.Await(true, "Them ve may bay thanh cong!", "");
         }
     }
 }

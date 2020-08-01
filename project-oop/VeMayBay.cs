@@ -56,31 +56,75 @@ namespace project_oop
         // methods
         public string toString()
         {
-            return $"Ma ve: {_maVe}\n" +
-                $"So luong ve: {_soLuongVe}\n" +
-                $"Gia ve: {_giaVe}\n" +
-                $"Thanh toan: {_thanhToan}\n" +
-                $"Nhan vien: {_nhanVien.toString()}\n" +
-                $"Khach hang: {_khachHang.toString()}\n" +
-                $"Chuyen Bay: {_chuyenBay.toString()}";
+            return $"\t{_maVe,-15}{_soLuongVe,-15}{_giaVe,-15}{_thanhToan,-15}{_nhanVien.HoTen,-15}{_khachHang.HoTen,-15}{_chuyenBay.MaCB,-15}";
         }
 
         public void Read(StreamReader sR)
         {
             string line = sR.ReadLine();
             string[] arr = line.Split('#');
-            MaVe = arr[0];
-            SoLuongVe = int.Parse(arr[1]);
-            GiaVe = int.Parse(arr[2]);
-            ThanhToan = arr[3];
-            NhanVien.MaNV = arr[4];
-            KhachHang.MaKH = arr[5];
-            ChuyenBay.MaCB = arr[6];
+            _maVe = arr[0];
+            _soLuongVe = int.Parse(arr[1]);
+            _giaVe = int.Parse(arr[2]);
+            _thanhToan = arr[3];
+
+            _nhanVien.MaNV = arr[4];
+            _nhanVien = NhanVien.Get(_nhanVien.MaNV);
+
+            _khachHang.MaKH = arr[5];
+            _khachHang = KhachHang.Get(_khachHang.MaKH);
+
+            _chuyenBay.MaCB = arr[6];
+            _chuyenBay = ChuyenBay.Get(_chuyenBay.MaCB);
         }
 
         public void Write(StreamWriter sW)
         {
             sW.WriteLine($"{MaVe}#{SoLuongVe}#{GiaVe}#{ThanhToan}#{NhanVien.MaNV}#{KhachHang.MaKH}#{ChuyenBay.MaCB}");
+        }
+
+        public static LinkedList<VeMayBay> InputList()
+        {
+            LinkedList<VeMayBay> List = new LinkedList<VeMayBay>();
+            int iN = 0;
+            try
+            {
+                using (StreamReader sR = new StreamReader("VeMayBay.txt"))
+                {
+                    int.TryParse(sR.ReadLine(), out iN);
+                    for (int i = 0; i < iN; i++)
+                    {
+                        VeMayBay p = new VeMayBay();
+                        p.Read(sR);
+                        List.AddLast(p);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                using (StreamWriter sW = new StreamWriter("VeMayBay.txt"))
+                    throw;
+            }
+            return List;
+        }
+
+        public static void WriteList(LinkedList<VeMayBay> List)
+        {
+            using (StreamWriter sW = new StreamWriter("VeMayBay.txt"))
+            {
+                sW.WriteLine(List.Count);
+                for (LinkedListNode<VeMayBay> p = List.First; p != null; p = p.Next)
+                    p.Value.Write(sW);
+            }
+        }
+
+        public static void PrintList(LinkedList<VeMayBay> List)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\t{"Ma ve",-15}{"So luong",-15}{"Gia",-15}{"Thanh toan",-15}{"Nhan vien",-15}{"Khach hang",-15}{"Chuyen Bay",-15}");
+            Console.ResetColor();
+            for (LinkedListNode<VeMayBay> p = List.First; p != null; p = p.Next)
+                Console.WriteLine(p.Value.toString());
         }
     }
 }
