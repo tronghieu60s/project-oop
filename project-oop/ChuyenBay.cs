@@ -48,11 +48,7 @@ namespace project_oop
         // methods
         public string toString()
         {
-            return $"Ma chuyen bay: {_maCB}\n" +
-                $"Ngay gio bay: {_ngayGioBay}\n" +
-                $"Diem di: {_diemDi.toString()}\n" +
-                $"Diem den: {_diemDen.toString()}\n" +
-                $"May bay: {_mayBay.toString()}";
+            return $"\t{_maCB,-25}{_ngayGioBay,-25}{_diemDi.MaSB,-25}{_diemDen.MaSB,-25}{_mayBay.MaMB,-25}";
         }
 
         public void Read(StreamReader sR)

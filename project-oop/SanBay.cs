@@ -40,7 +40,7 @@ namespace project_oop
         // methods
         public string toString()
         {
-            return $"{_maSB,-25}{_tenSB,-25}{_quocGia,-25}";
+            return $"\t{_maSB,-25}{_tenSB,-25}{_quocGia,-25}";
         }
 
         public void Read(StreamReader sR)
