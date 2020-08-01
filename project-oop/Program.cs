@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.IO;
+using System.ComponentModel;
 
 namespace project_oop
 {
@@ -15,6 +16,7 @@ namespace project_oop
             LinkedList<KhachHang> ListKhachHang = KhachHang.InputList();
             LinkedList<VeMayBay> ListVeMB = VeMayBay.InputList();
 
+            Back:
             NhanVien nvDangNhap = DangNhapNhanVien(ListNhanVien);
             if (nvDangNhap != null)
             {
@@ -66,12 +68,16 @@ namespace project_oop
                 }
             }
             else
-                Console.WriteLine("Dang nhap that bai!");
+            {
+                Support.Await(false, "", "Tai khoan hoac mat khau khong chinh xac!");
+                goto Back;
+            }
         }
 
         // Action NhanVien
         static NhanVien DangNhapNhanVien(LinkedList<NhanVien> List)
         {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("--- Dang Nhap Nhan Vien ---");
             Console.ResetColor();
