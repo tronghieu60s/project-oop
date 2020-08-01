@@ -32,12 +32,15 @@ namespace project_oop
             _quocGia = quocGia;
         }
 
+        ~SanBay()
+        {
+            Console.WriteLine("Ket thuc San Bay!");
+        }
+
         // methods
         public string toString()
         {
-            return $"Ma san bay: {_maSB}\n" +
-                $"Ten san bay: {_tenSB}\n" +
-                $"Quoc gia: {_quocGia}";
+            return $"{_maSB,-25}{_tenSB,-25}{_quocGia,-25}";
         }
 
         public void Read(StreamReader sR)

@@ -48,6 +48,11 @@ namespace project_oop
             _chuyenBay = chuyenBay;
         }
 
+        ~VeMayBay()
+        {
+            Console.WriteLine("Ket thuc Ve May Bay!");
+        }
+
         // methods
         public string toString()
         {

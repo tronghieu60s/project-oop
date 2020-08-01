@@ -32,6 +32,11 @@ namespace project_oop
             _pass = pass;
         }
 
+        ~NhanVien()
+        {
+            Console.WriteLine("Ket thuc Nhan Vien!");
+        }
+        
         // methods
         public override string toString()
         {

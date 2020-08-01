@@ -43,6 +43,11 @@ namespace project_oop
             _sdt = sdt;
         }
 
+        ~Nguoi()
+        {
+            Console.WriteLine("Ket thuc Nguoi!");
+        }
+
         // methods
         public virtual string toString()
         {

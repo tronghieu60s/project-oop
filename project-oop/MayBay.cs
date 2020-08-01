@@ -36,13 +36,15 @@ namespace project_oop
             _soLuongGhe = soLuongGhe;
         }
 
+        ~MayBay()
+        {
+            Console.WriteLine("Ket thuc May Bay!");
+        }
+
         // methods
         public string toString()
         {
-            return $"Ma may bay: {_maMB}\n" +
-                $"Ten may bay: {_tenMayBay}\n" +
-                $"Ten hang: {_tenHangMB}\n" +
-                $"So luong ghe: {_soLuongGhe}";
+            return $"\t{_maMB,-25}{_tenMayBay,-25}{_tenHangMB,-25}{_soLuongGhe,-25}";
         }
 
         public void Read(StreamReader sR)

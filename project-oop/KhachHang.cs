@@ -31,6 +31,11 @@ namespace project_oop
             _passport = passport;
         }
 
+        ~KhachHang()
+        {
+            Console.WriteLine("Ket thuc Khach Hang!");
+        }
+
         // methods
         public override string toString()
         {
