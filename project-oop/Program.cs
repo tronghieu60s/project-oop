@@ -8,27 +8,32 @@ namespace project_oop
     {
         static void Main(string[] args)
         {
-            LinkedList<NhanVien> ListNhanVien = InputListNhanVien();
+            LinkedList<NhanVien> ListNhanVien = NhanVien.InputList();
             if (DangNhapNhanVien(ListNhanVien) != null)
             {
-                Menu:
+            Menu:
                 switch (Menu.MenuNhanVien())
                 {
                     case 1:
-                        LinkedList<MayBay> ListMayBay = InputListMayBay();
-                        PrintListMayBay(ListMayBay);
-                        ThemMayBay(ListMayBay);
+                        LinkedList<MayBay> ListMayBay = MayBay.InputList();
+                        MayBay.PrintList(ListMayBay);
+                        if (Support.CheckForInput())
+                            ThemMayBay(ListMayBay);
                         Support.PressKeyToExit();
                         goto Menu;
                     case 2:
-                        LinkedList<SanBay> ListSanBay = InputListSanBay();
-                        PrintListSanBay(ListSanBay);
-                        ThemSanBay(ListSanBay);
+                        LinkedList<SanBay> ListSanBay = SanBay.InputList();
+                        SanBay.PrintList(ListSanBay);
+                        if (Support.CheckForInput())
+                            ThemSanBay(ListSanBay);
                         Support.PressKeyToExit();
                         goto Menu;
                     case 3:
-                        LinkedList<ChuyenBay> ListChuyenBay = InputListChuyenBay();
-
+                        LinkedList<ChuyenBay> ListChuyenBay = ChuyenBay.InputList();
+                        ChuyenBay.PrintList(ListChuyenBay);
+                        if (Support.CheckForInput())
+                            ThemChuyenBay(ListChuyenBay);
+                        Support.PressKeyToExit();
                         goto Menu;
                     default:
                         break;
@@ -39,31 +44,6 @@ namespace project_oop
         }
 
         // Action NhanVien
-        static LinkedList<NhanVien> InputListNhanVien()
-        {
-            LinkedList<NhanVien> List = new LinkedList<NhanVien>();
-            int iN = 0;
-            try
-            {
-                using (StreamReader sR = new StreamReader("NhanVien.txt"))
-                {
-                    int.TryParse(sR.ReadLine(), out iN);
-                    for (int i = 0; i < iN; i++)
-                    {
-                        NhanVien p = new NhanVien();
-                        p.Read(sR);
-                        List.AddLast(p);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                using (StreamWriter sW = new StreamWriter("NhanVien.txt"))
-                    throw;
-            }
-            return List;
-        }
-
         static NhanVien DangNhapNhanVien(LinkedList<NhanVien> List)
         {
             Console.Write("User: ");
@@ -79,50 +59,6 @@ namespace project_oop
         }
 
         // Action MayBay
-        static LinkedList<MayBay> InputListMayBay()
-        {
-            LinkedList<MayBay> List = new LinkedList<MayBay>();
-            int iN = 0;
-            try
-            {
-                using (StreamReader sR = new StreamReader("MayBay.txt"))
-                {
-                    int.TryParse(sR.ReadLine(), out iN);
-                    for (int i = 0; i < iN; i++)
-                    {
-                        MayBay p = new MayBay();
-                        p.Read(sR);
-                        List.AddLast(p);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                using (StreamWriter sW = new StreamWriter("MayBay.txt"))
-                    throw;
-            }
-            return List;
-        }
-
-        static void WriteListMayBay(LinkedList<MayBay> List)
-        {
-            using (StreamWriter sW = new StreamWriter("MayBay.txt"))
-            {
-                sW.WriteLine(List.Count);
-                for (LinkedListNode<MayBay> p = List.First; p != null; p = p.Next)
-                    p.Value.Write(sW);
-            }
-        }
-
-        static void PrintListMayBay(LinkedList<MayBay> List)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\t{0,-25}{1,-25}{2,-25}{3,-25}", "Ma May Bay", "Ten May Bay", "Ten Hang", "So Luong Ghe");
-            Console.ResetColor();
-            for (LinkedListNode<MayBay> p = List.First; p != null; p = p.Next)
-                Console.WriteLine(p.Value.toString());
-        }
-
         static void ThemMayBay(LinkedList<MayBay> List)
         {
             MayBay mayBay = new MayBay();
@@ -137,55 +73,11 @@ namespace project_oop
             int soLuongGhe; int.TryParse(Console.ReadLine(), out soLuongGhe);
             mayBay.SoLuongGhe = soLuongGhe;
             List.AddLast(mayBay);
-            WriteListMayBay(List);
+            MayBay.WriteList(List);
             Support.Await(true, "Them may bay thanh cong!", "");
         }
 
         // Action SanBay
-        static LinkedList<SanBay> InputListSanBay()
-        {
-            LinkedList<SanBay> List = new LinkedList<SanBay>();
-            int iN = 0;
-            try
-            {
-                using (StreamReader sR = new StreamReader("SanBay.txt"))
-                {
-                    int.TryParse(sR.ReadLine(), out iN);
-                    for (int i = 0; i < iN; i++)
-                    {
-                        SanBay p = new SanBay();
-                        p.Read(sR);
-                        List.AddLast(p);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                using (StreamWriter sW = new StreamWriter("SanBay.txt"))
-                    throw;
-            }
-            return List;
-        }
-
-        static void WriteListSanBay(LinkedList<SanBay> List)
-        {
-            using (StreamWriter sW = new StreamWriter("SanBay.txt"))
-            {
-                sW.WriteLine(List.Count);
-                for (LinkedListNode<SanBay> p = List.First; p != null; p = p.Next)
-                    p.Value.Write(sW);
-            }
-        }
-
-        static void PrintListSanBay(LinkedList<SanBay> List)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\t{0,-25}{1,-25}{2,-25}", "Ma San Bay", "Ten San Bay", "Quoc Gia");
-            Console.ResetColor();
-            for (LinkedListNode<SanBay> p = List.First; p != null; p = p.Next)
-                Console.WriteLine(p.Value.toString());
-        }
-
         static void ThemSanBay(LinkedList<SanBay> List)
         {
             SanBay sanBay = new SanBay();
@@ -197,60 +89,16 @@ namespace project_oop
             Console.Write("\t- Quoc gia: ");
             sanBay.QuocGia = Console.ReadLine();
             List.AddLast(sanBay);
-            WriteListSanBay(List);
+            SanBay.WriteList(List);
             Support.Await(true, "Them san bay thanh cong!", "");
         }
 
         // Action ChuyenBay
-        static LinkedList<ChuyenBay> InputListChuyenBay()
-        {
-            LinkedList<ChuyenBay> List = new LinkedList<ChuyenBay>();
-            int iN = 0;
-            try
-            {
-                using (StreamReader sR = new StreamReader("ChuyenBay.txt"))
-                {
-                    int.TryParse(sR.ReadLine(), out iN);
-                    for (int i = 0; i < iN; i++)
-                    {
-                        ChuyenBay p = new ChuyenBay();
-                        p.Read(sR);
-                        List.AddLast(p);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                using (StreamWriter sW = new StreamWriter("ChuyenBay.txt"))
-                    throw;
-            }
-            return List;
-        }
-
-        static void WriteListChuyenBay(LinkedList<ChuyenBay> List)
-        {
-            using (StreamWriter sW = new StreamWriter("ChuyenBay.txt"))
-            {
-                sW.WriteLine(List.Count);
-                for (LinkedListNode<ChuyenBay> p = List.First; p != null; p = p.Next)
-                    p.Value.Write(sW);
-            }
-        }
-
-        static void PrintListChuyenBay(LinkedList<ChuyenBay> List)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\t{0,-25}{1,-25}{2,-25}{3,-25}{4,-25}", "Ma Chuyen Bay", "Ngay Gio Bay", "Diem Di", "Diem Den", "May Bay");
-            Console.ResetColor();
-            for (LinkedListNode<ChuyenBay> p = List.First; p != null; p = p.Next)
-                Console.WriteLine(p.Value.toString());
-        }
-
         static void ThemChuyenBay(LinkedList<ChuyenBay> List)
         {
             ChuyenBay chuyenBay = new ChuyenBay();
-            LinkedList<SanBay> ListSanBay = InputListSanBay();
-            LinkedList<MayBay> ListMayBay = InputListMayBay();
+            LinkedList<SanBay> ListSanBay = SanBay.InputList();
+            LinkedList<MayBay> ListMayBay = MayBay.InputList();
 
             Console.WriteLine("\nThem chuyen bay: ");
             chuyenBay.MaCB = Support.RandomID("CB");
@@ -258,19 +106,20 @@ namespace project_oop
             DateTime ngayGioBay; DateTime.TryParse(Console.ReadLine(), out ngayGioBay);
             chuyenBay.NgayGioBay = ngayGioBay;
 
-            PrintListSanBay(ListSanBay);
+            SanBay.PrintList(ListSanBay);
             Console.Write("\t- Nhap ma diem di: ");
             string maDiemDi = Console.ReadLine();
             Console.Write("\t- Nhap ma diem den: ");
             string maDiemDen = Console.ReadLine();
             for (LinkedListNode<SanBay> p = ListSanBay.First; p != null; p = p.Next)
             {
-                if(p.Value.MaSB == maDiemDi)
+                if (p.Value.MaSB == maDiemDi)
                     chuyenBay.DiemDi = p.Value;
-                if(p.Value.MaSB == maDiemDen)
+                if (p.Value.MaSB == maDiemDen)
                     chuyenBay.DiemDen = p.Value;
             }
 
+            MayBay.PrintList(ListMayBay);
             Console.Write("\t- Nhap ma may bay: ");
             string maMayBay = Console.ReadLine();
             for (LinkedListNode<MayBay> p = ListMayBay.First; p != null; p = p.Next)
@@ -280,7 +129,47 @@ namespace project_oop
             }
 
             List.AddLast(chuyenBay);
-            WriteListChuyenBay(List);
+            ChuyenBay.WriteList(List);
+            Support.Await(true, "Them chuyen bay thanh cong!", "");
+        }
+
+        // Action KhachHang
+        static void ThemKhachHang(LinkedList<ChuyenBay> List)
+        {
+            ChuyenBay chuyenBay = new ChuyenBay();
+            LinkedList<SanBay> ListSanBay = SanBay.InputList();
+            LinkedList<MayBay> ListMayBay = MayBay.InputList();
+
+            Console.WriteLine("\nThem chuyen bay: ");
+            chuyenBay.MaCB = Support.RandomID("CB");
+            Console.Write("\t- Ngay gio bay: ");
+            DateTime ngayGioBay; DateTime.TryParse(Console.ReadLine(), out ngayGioBay);
+            chuyenBay.NgayGioBay = ngayGioBay;
+
+            SanBay.PrintList(ListSanBay);
+            Console.Write("\t- Nhap ma diem di: ");
+            string maDiemDi = Console.ReadLine();
+            Console.Write("\t- Nhap ma diem den: ");
+            string maDiemDen = Console.ReadLine();
+            for (LinkedListNode<SanBay> p = ListSanBay.First; p != null; p = p.Next)
+            {
+                if (p.Value.MaSB == maDiemDi)
+                    chuyenBay.DiemDi = p.Value;
+                if (p.Value.MaSB == maDiemDen)
+                    chuyenBay.DiemDen = p.Value;
+            }
+
+            MayBay.PrintList(ListMayBay);
+            Console.Write("\t- Nhap ma may bay: ");
+            string maMayBay = Console.ReadLine();
+            for (LinkedListNode<MayBay> p = ListMayBay.First; p != null; p = p.Next)
+            {
+                if (p.Value.MaMB == maMayBay)
+                    chuyenBay.MayBay = p.Value;
+            }
+
+            List.AddLast(chuyenBay);
+            ChuyenBay.WriteList(List);
             Support.Await(true, "Them chuyen bay thanh cong!", "");
         }
     }

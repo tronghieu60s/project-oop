@@ -74,5 +74,17 @@ namespace project_oop
             Console.ResetColor();
             Console.ReadLine();
         }
+
+        public static bool CheckForInput()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\nBan co muon them du lieu khong (Y/N)? ");
+            Console.ResetColor();
+            string check = Console.ReadLine();
+            if (check.ToLower() == "y" || check.ToLower() == "yes")
+                return true;
+            else
+                return false;
+        }
     }
 }

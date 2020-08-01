@@ -64,5 +64,31 @@ namespace project_oop
         {
             sW.WriteLine($"{MaNV}#{LuongCoBan}#{Pass}#{HoTen}#{Cmnd}#{QuocTich}#{NgaySinh}#{GioiTinh}#{Sdt}");
         }
+
+
+        public static LinkedList<NhanVien> InputList()
+        {
+            LinkedList<NhanVien> List = new LinkedList<NhanVien>();
+            int iN = 0;
+            try
+            {
+                using (StreamReader sR = new StreamReader("NhanVien.txt"))
+                {
+                    int.TryParse(sR.ReadLine(), out iN);
+                    for (int i = 0; i < iN; i++)
+                    {
+                        NhanVien p = new NhanVien();
+                        p.Read(sR);
+                        List.AddLast(p);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                using (StreamWriter sW = new StreamWriter("NhanVien.txt"))
+                    throw;
+            }
+            return List;
+        }
     }
 }

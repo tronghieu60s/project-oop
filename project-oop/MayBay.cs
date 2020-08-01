@@ -61,5 +61,58 @@ namespace project_oop
         {
             sW.WriteLine($"{MaMB}#{TenMayBay}#{TenHangMB}#{SoLuongGhe}");
         }
+
+        public static LinkedList<MayBay> InputList()
+        {
+            LinkedList<MayBay> List = new LinkedList<MayBay>();
+            int iN = 0;
+            try
+            {
+                using (StreamReader sR = new StreamReader("MayBay.txt"))
+                {
+                    int.TryParse(sR.ReadLine(), out iN);
+                    for (int i = 0; i < iN; i++)
+                    {
+                        MayBay p = new MayBay();
+                        p.Read(sR);
+                        List.AddLast(p);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                using (StreamWriter sW = new StreamWriter("MayBay.txt"))
+                    throw;
+            }
+            return List;
+        }
+
+        public static void WriteList(LinkedList<MayBay> List)
+        {
+            using (StreamWriter sW = new StreamWriter("MayBay.txt"))
+            {
+                sW.WriteLine(List.Count);
+                for (LinkedListNode<MayBay> p = List.First; p != null; p = p.Next)
+                    p.Value.Write(sW);
+            }
+        }
+
+        public static void PrintList(LinkedList<MayBay> List)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\t{0,-25}{1,-25}{2,-25}{3,-25}", "Ma May Bay", "Ten May Bay", "Ten Hang", "So Luong Ghe");
+            Console.ResetColor();
+            for (LinkedListNode<MayBay> p = List.First; p != null; p = p.Next)
+                Console.WriteLine(p.Value.toString());
+        }
+
+        public MayBay Get(string maMB)
+        {
+            LinkedList<MayBay> ListMayBay = InputList();
+            for (LinkedListNode<MayBay> p = ListMayBay.First; p != null; p = p.Next)
+                if (p.Value.MaMB == maMB)
+                    return p.Value;
+            return null;
+        }
     }
 }

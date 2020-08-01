@@ -56,5 +56,58 @@ namespace project_oop
         {
             sW.WriteLine($"{MaSB}#{TenSB}#{QuocGia}");
         }
+
+        public static LinkedList<SanBay> InputList()
+        {
+            LinkedList<SanBay> List = new LinkedList<SanBay>();
+            int iN = 0;
+            try
+            {
+                using (StreamReader sR = new StreamReader("SanBay.txt"))
+                {
+                    int.TryParse(sR.ReadLine(), out iN);
+                    for (int i = 0; i < iN; i++)
+                    {
+                        SanBay p = new SanBay();
+                        p.Read(sR);
+                        List.AddLast(p);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                using (StreamWriter sW = new StreamWriter("SanBay.txt"))
+                    throw;
+            }
+            return List;
+        }
+
+        public static void WriteList(LinkedList<SanBay> List)
+        {
+            using (StreamWriter sW = new StreamWriter("SanBay.txt"))
+            {
+                sW.WriteLine(List.Count);
+                for (LinkedListNode<SanBay> p = List.First; p != null; p = p.Next)
+                    p.Value.Write(sW);
+            }
+        }
+
+        public static void PrintList(LinkedList<SanBay> List)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\t{0,-25}{1,-25}{2,-25}", "Ma San Bay", "Ten San Bay", "Quoc Gia");
+            Console.ResetColor();
+            for (LinkedListNode<SanBay> p = List.First; p != null; p = p.Next)
+                Console.WriteLine(p.Value.toString());
+        }
+
+        public SanBay Get(string maSB)
+        {
+            LinkedList<SanBay> ListSanBay = InputList();
+            for (LinkedListNode<SanBay> p = ListSanBay.First; p != null; p = p.Next)
+                if (p.Value.MaSB == maSB)
+                    return p.Value;
+            return null;
+        }
     }
 }
