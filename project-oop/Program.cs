@@ -9,6 +9,12 @@ namespace project_oop
         static void Main(string[] args)
         {
             LinkedList<NhanVien> ListNhanVien = NhanVien.InputList();
+            LinkedList<MayBay> ListMayBay = MayBay.InputList();
+            LinkedList<SanBay> ListSanBay = SanBay.InputList();
+            LinkedList<ChuyenBay> ListChuyenBay = ChuyenBay.InputList();
+            LinkedList<KhachHang> ListKhachHang = KhachHang.InputList();
+            LinkedList<VeMayBay> ListVeMB = VeMayBay.InputList();
+
             NhanVien nvDangNhap = DangNhapNhanVien(ListNhanVien);
             if (nvDangNhap != null)
             {
@@ -16,38 +22,43 @@ namespace project_oop
                 switch (Menu.MenuNhanVien())
                 {
                     case 1:
-                        LinkedList<MayBay> ListMayBay = MayBay.InputList();
                         MayBay.PrintList(ListMayBay);
                         if (Support.CheckForInput())
                             ThemMayBay(ListMayBay);
                         Support.PressKeyToExit();
                         goto Menu;
                     case 2:
-                        LinkedList<SanBay> ListSanBay = SanBay.InputList();
                         SanBay.PrintList(ListSanBay);
                         if (Support.CheckForInput())
                             ThemSanBay(ListSanBay);
                         Support.PressKeyToExit();
                         goto Menu;
                     case 3:
-                        LinkedList<ChuyenBay> ListChuyenBay = ChuyenBay.InputList();
                         ChuyenBay.PrintList(ListChuyenBay);
                         if (Support.CheckForInput())
                             ThemChuyenBay(ListChuyenBay);
                         Support.PressKeyToExit();
                         goto Menu;
                     case 4:
-                        LinkedList<KhachHang> ListKhachHang = KhachHang.InputList();
                         KhachHang.PrintList(ListKhachHang);
                         if (Support.CheckForInput())
                             ThemKhachHang(ListKhachHang);
                         Support.PressKeyToExit();
                         goto Menu;
                     case 5:
-                        LinkedList<VeMayBay> ListVeMB = VeMayBay.InputList();
                         VeMayBay.PrintList(ListVeMB);
                         if (Support.CheckForInput())
                             ThemVeMayBay(ListVeMB, nvDangNhap);
+                        Support.PressKeyToExit();
+                        goto Menu;
+                    case 6:
+                        VeMayBay.PrintList(ListVeMB);
+                        XoaVeMayBay(ListVeMB);
+                        Support.PressKeyToExit();
+                        goto Menu;
+                    case 7:
+                        VeMayBay.PrintList(ListVeMB);
+                        SuaVeMayBay(ListVeMB, nvDangNhap);
                         Support.PressKeyToExit();
                         goto Menu;
                     default:
@@ -61,6 +72,9 @@ namespace project_oop
         // Action NhanVien
         static NhanVien DangNhapNhanVien(LinkedList<NhanVien> List)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("--- Dang Nhap Nhan Vien ---");
+            Console.ResetColor();
             Console.Write("User: ");
             string user = Console.ReadLine();
             Console.Write("Pass: ");
@@ -221,6 +235,71 @@ namespace project_oop
             List.AddLast(veMayBay);
             VeMayBay.WriteList(List);
             Support.Await(true, "Them ve may bay thanh cong!", "");
+        }
+
+        static void XoaVeMayBay(LinkedList<VeMayBay> List)
+        {
+            Console.Write("Nhap ma ve can xoa: ");
+            string maVe = Console.ReadLine();
+            for (LinkedListNode<VeMayBay> p = List.First; p != null; p = p.Next)
+            {
+                if (p.Value.MaVe == maVe)
+                {
+                    List.Remove(p.Value);
+                    VeMayBay.WriteList(List);
+                    Support.Await(true, "Xoa thanh cong!", "");
+                    return;
+                }
+            }
+            Support.Await(false, "", "Xoa that bai! Ma ve khong dung!");
+        }
+
+        static void SuaVeMayBay(LinkedList<VeMayBay> List, NhanVien nhanVien)
+        {
+            Console.Write("Nhap ma ve can sua: ");
+            string maVe = Console.ReadLine();
+            for (LinkedListNode<VeMayBay> p = List.First; p != null; p = p.Next)
+            {
+                if (p.Value.MaVe == maVe)
+                {
+                    LinkedList<KhachHang> ListKhachHang = KhachHang.InputList();
+                    LinkedList<ChuyenBay> ListChuyenBay = ChuyenBay.InputList();
+
+                    Console.WriteLine("\nSua ve may bay: ");
+                    Console.Write("\t- Nhap so luong: ");
+                    int soLuongVe; int.TryParse(Console.ReadLine(), out soLuongVe);
+                    p.Value.SoLuongVe = soLuongVe;
+                    Console.Write("\t- Nhap gia ve: ");
+                    int giaVe; int.TryParse(Console.ReadLine(), out giaVe);
+                    p.Value.GiaVe = giaVe;
+                    Console.Write("\t- Nhap loai thanh toan: ");
+                    p.Value.ThanhToan = Console.ReadLine();
+                    p.Value.NhanVien = nhanVien;
+
+                    KhachHang.PrintList(ListKhachHang);
+                    Console.Write("\t- Nhap ma khach hang: ");
+                    string maKH = Console.ReadLine();
+                    for (LinkedListNode<KhachHang> q = ListKhachHang.First; q != null; q = q.Next)
+                    {
+                        if (q.Value.MaKH == maKH)
+                            p.Value.KhachHang = q.Value;
+                    }
+
+                    ChuyenBay.PrintList(ListChuyenBay);
+                    Console.Write("\t- Nhap ma chuyen bay: ");
+                    string maCB = Console.ReadLine();
+                    for (LinkedListNode<ChuyenBay> q = ListChuyenBay.First; q != null; q = q.Next)
+                    {
+                        if (q.Value.MaCB == maCB)
+                            p.Value.ChuyenBay = q.Value;
+                    }
+
+                    VeMayBay.WriteList(List);
+                    Support.Await(true, "Sua thanh cong!", "");
+                    return;
+                }
+            }
+            Support.Await(false, "", "Sua that bai! Ma ve khong dung!");
         }
     }
 }
